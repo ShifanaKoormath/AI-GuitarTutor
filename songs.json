@@ -1,0 +1,32 @@
+{
+    "shape of you": {
+        "song": "Shape of You",
+        "sections": {
+            "intro": ["C#m", "F#m", "A", "B"],
+            "verse": ["C#m", "F#m", "A", "B"],
+            "chorus": ["C#m", "A", "B"],
+            "bridge": ["C#m", "A", "B"]
+        },
+        "chords": [
+            { "timestamp": 0, "chord": "C#m" },
+            { "timestamp": 4, "chord": "F#m" },
+            { "timestamp": 8, "chord": "A" },
+            { "timestamp": 12, "chord": "B" }
+        ]
+    },
+    "perfect": {
+        "song": "Perfect",
+        "sections": {
+            "intro": ["G", "Em", "C", "D"],
+            "verse": ["G", "Em", "C", "D"],
+            "chorus": ["G", "Em", "C", "D"],
+            "bridge": ["Em", "C", "G", "D"]
+        },
+        "chords": [
+            { "timestamp": 0, "chord": "G" },
+            { "timestamp": 5, "chord": "Em" },
+            { "timestamp": 10, "chord": "C" },
+            { "timestamp": 15, "chord": "D" }
+        ]
+    }
+}
