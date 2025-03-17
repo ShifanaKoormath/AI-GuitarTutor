@@ -32,6 +32,8 @@ Copy code
 
 npm install
 
+npm install express multer cors path fs
+
 Frontend (Client)
 
 sh
@@ -39,6 +41,8 @@ Copy code
 
 cd ui
 npm install
+npm install react pitchy
+
 
 🎯 Running the Application
 
