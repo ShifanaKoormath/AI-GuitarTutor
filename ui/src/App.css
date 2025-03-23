@@ -206,3 +206,21 @@ audio {
   margin-top: 10px;
   width: 100%;
 }
+.chord-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.chord-item {
+  text-align: center;
+}
+
+.chord-image {
+  width: 100px;  /* Adjust as needed */
+  height: auto;
+  display: block;
+}
+

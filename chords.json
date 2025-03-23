@@ -1,0 +1,37 @@
+{
+    "C": "/chords/C.png",
+    "D": "/chords/D.png",
+    "E": "/chords/E.png",
+    "G": "/chords/G.png",
+    "A": "/chords/A.png",
+    "F": "/chords/F.png",
+    "B": "/chords/B.png",
+    
+    "Cm": "/chords/Cm.png",
+    "Dm": "/chords/Dm.png",
+    "Em": "/chords/Em.png",
+    "Gm": "/chords/Gm.png",
+    "Am": "/chords/Am.png",
+    "Bm": "/chords/Bm.png",
+
+    "C#m": "/chords/C#m.png",
+    "D#m": "/chords/D#m.png",
+    "E#m": "/chords/E#m.png",
+    "G#m": "/chords/G#m.png",
+    "A#m": "/chords/A#m.png",
+    "B#m": "/chords/B#m.png",
+    
+    "C7": "/chords/C7.png",
+    "D7": "/chords/D7.png",
+    "E7": "/chords/E7.png",
+    "G7": "/chords/G7.png",
+    "A7": "/chords/A7.png",
+    "B7": "/chords/B7.png",
+    
+    "Asus2": "/chords/Asus2.png",
+    "Dsus2": "/chords/Dsus2.png",
+    "Gsus2": "/chords/Gsus2.png",
+    "Asus4": "/chords/Asus4.png",
+    "Dsus4": "/chords/Dsus4.png",
+    "Gsus4": "/chords/Gsus4.png"
+}

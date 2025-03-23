@@ -1,16 +1,23 @@
-import React from "react";
-
-const ChordDisplay = ({ results }) => {
-    if (!results) return null;
-
+const ChordDisplay = ({ detectedChords }) => {
     return (
-        <div>
-            <h3>Analysis Results</h3>
-            <p><strong>Tempo:</strong> {results.tempo} BPM</p>
-            <p><strong>Key:</strong> {results.key}</p>
-            <p><strong>Chords:</strong> {results.chords.join(", ")}</p>
+        <div className="flex flex-wrap gap-4 mt-2">
+            {detectedChords.map((chord, index) => (
+                <div key={index} className="flex flex-col items-center">
+                    <p className="text-sm font-medium">{chord.chord}</p>
+                    {chord.diagram ? (
+                        <img
+                            src={chord.diagram.startsWith("/chords") ? chord.diagram : `/chords/${chord.chord}.png`}
+                            alt={`Chord ${chord.chord}`}
+                            className="w-16 h-16 object-contain"
+                        />
+                    ) : (
+                        <p className="text-xs text-red-500">No Diagram</p>
+                    )}
+                </div>
+            ))}
         </div>
     );
 };
 
 export default ChordDisplay;
+

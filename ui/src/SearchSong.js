@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { PitchDetector } from "pitchy";
 import WaveformVisualizer from "./WaveformVisualizer"; // Import visualizer component
 import "./App.css";
+import ChordDisplay from "./components/ChordDisplay";
 
 const SearchSong = () => {
     const [songName, setSongName] = useState("");
@@ -16,27 +17,28 @@ const SearchSong = () => {
     const mediaStreamRef = useRef(null);
     const intervalRef = useRef(null);
     const pitchDetectorRef = useRef(null);
+
     const handleSearch = async () => {
         if (!songName.trim()) {
             setError("Please enter a song name.");
             return;
         }
-    
+
         setError("");
         setSongDetails(null);
         setFeedback("");
-    
+
         try {
             const response = await fetch(`http://localhost:5000/search-song/${encodeURIComponent(songName)}`);
             const data = await response.json();
-    
+
             if (response.ok) {
-                // If chords are objects, extract the 'chord' property from each object
-                const formattedChords = data.chords.map(chord => chord.chord); // Access the 'chord' property
-    
                 setSongDetails({
                     ...data,
-                    chords: formattedChords
+                    chords: data.chords.map(chordObj => ({
+                        chord: chordObj.chord, 
+                        diagram: chordObj.diagram 
+                    }))
                 });
             } else {
                 setError(data.message);
@@ -45,9 +47,20 @@ const SearchSong = () => {
             setError("Failed to fetch song details. Try again.");
         }
     };
-    
-    
-    // Start Microphone & Detect Chords
+
+    const ChordDisplay = ({ detectedChords }) => {
+        return (
+            <div className="chord-container">
+                {detectedChords.map((chord, index) => (
+                    <div key={index} className="chord-item">
+                        <p>{chord.chord}</p>
+                        <img src={`${process.env.PUBLIC_URL}${chord.diagram}`} alt={chord.chord} className="chord-image" />
+                        </div>
+                ))}
+            </div>
+        );
+    };
+
     const startListening = async () => {
         setIsListening(true);
         setUserChords([]);
@@ -55,12 +68,13 @@ const SearchSong = () => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({
                 audio: {
-                    echoCancellation: false, // Turn off voice-focused filters
-                    noiseSuppression: false, // Disable noise filtering
-                    autoGainControl: false,  // Avoid reducing guitar volume
+                    echoCancellation: false, 
+                    noiseSuppression: false, 
+                    autoGainControl: false,  
                 }
             });
-                        audioContextRef.current = new AudioContext();
+
+            audioContextRef.current = new AudioContext();
             analyserRef.current = audioContextRef.current.createAnalyser();
             mediaStreamRef.current = audioContextRef.current.createMediaStreamSource(stream);
             mediaStreamRef.current.connect(analyserRef.current);
@@ -73,11 +87,11 @@ const SearchSong = () => {
                 
                 const [frequency, clarity] = pitchDetectorRef.current.findPitch(buffer, audioContextRef.current.sampleRate);
             
-                if (clarity > 0.6 && frequency && frequency >= 82 && frequency <= 1200) { // Guitar range
+                if (clarity > 0.6 && frequency && frequency >= 82 && frequency <= 1200) { 
                     const detectedChord = getChordFromFrequency(frequency);
                     if (detectedChord) {
                         setUserChords(prevChords => {
-                            if (!prevChords.includes(detectedChord)) {
+                            if (!prevChords.some(c => c.chord === detectedChord.chord)) {
                                 return [...prevChords, detectedChord];
                             }
                             return prevChords;
@@ -85,7 +99,6 @@ const SearchSong = () => {
                     }
                 }
             };
-            
 
             intervalRef.current = setInterval(detectPitch, 500);
         } catch (err) {
@@ -94,7 +107,6 @@ const SearchSong = () => {
         }
     };
 
-    // Stop Listening
     const stopListening = () => {
         if (mediaStreamRef.current) {
             mediaStreamRef.current.mediaStream.getTracks().forEach(track => track.stop());
@@ -108,21 +120,20 @@ const SearchSong = () => {
         setIsListening(false);
     };
 
-    // Convert Frequency to Chord
     const getChordFromFrequency = (freq) => {
         const chordMap = {
-            "C": [130.81, 261.63, 523.25],  // C3, C4, C5
-            "D": [146.83, 293.66, 587.33],  // D3, D4, D5
-            "E": [82.41, 164.81, 329.63, 659.25],  // E2, E3, E4, E5
-            "F": [174.61, 349.23, 698.46],  // F3, F4, F5
-            "G": [196.00, 392.00, 783.99],  // G3, G4, G5
-            "A": [110.00, 220.00, 440.00, 880.00],  // A2, A3, A4, A5
-            "B": [123.47, 246.94, 493.88, 987.77],  // B2, B3, B4, B5
+            "C": [130.81, 261.63, 523.25],  
+            "D": [146.83, 293.66, 587.33],  
+            "E": [82.41, 164.81, 329.63, 659.25],  
+            "F": [174.61, 349.23, 698.46],  
+            "G": [196.00, 392.00, 783.99],  
+            "A": [110.00, 220.00, 440.00, 880.00],  
+            "B": [123.47, 246.94, 493.88, 987.77],  
         };
-    
+
         let closestChord = null;
-        let minDifference = 15; // Slightly relaxed tolerance for better guitar recognition
-    
+        let minDifference = 15; 
+
         for (const [chord, frequencies] of Object.entries(chordMap)) {
             frequencies.forEach(f => {
                 const diff = Math.abs(f - freq);
@@ -132,20 +143,18 @@ const SearchSong = () => {
                 }
             });
         }
-    
-        return closestChord;
+
+        return closestChord ? { chord: closestChord, diagram: `/chords/${closestChord}.png` } : null;
     };
-    
-    
-    // Compare detected chords with correct chords
+
     const checkChords = () => {
         if (!songDetails) {
             setFeedback("Search for a song first.");
             return;
         }
 
-        const correctChords = songDetails.chords.map(chord => chord.toUpperCase());
-        const matched = userChords.filter(chord => correctChords.includes(chord)).length;
+        const correctChords = songDetails.chords.map(chord => chord.chord.toUpperCase());
+        const matched = userChords.filter(chord => correctChords.includes(chord.chord)).length;
         const accuracy = ((matched / correctChords.length) * 100).toFixed(2);
 
         if (accuracy === "100.00") {
@@ -160,7 +169,7 @@ const SearchSong = () => {
     return (
         <div className="flex flex-col items-center p-4">
             <h2 className="text-2xl font-bold mb-4">🎵 Search for a Song</h2>
-            
+
             <div className="flex gap-2">
                 <input
                     type="text"
@@ -182,7 +191,9 @@ const SearchSong = () => {
             {songDetails && (
                 <div className="mt-4 p-4 border rounded-md shadow-lg bg-gray-100">
                     <h3 className="text-xl font-semibold">{songDetails.song}</h3>
-                    <p className="mt-2"><strong>Chords:</strong> {songDetails.chords.join(", ")}</p>
+                    <p className="mt-2"><strong>Chords:</strong></p>
+                    <ChordDisplay detectedChords={songDetails.chords} />
+                    
                 </div>
             )}
 
@@ -198,11 +209,10 @@ const SearchSong = () => {
                         {isListening ? "🛑 Stop Listening" : "🎙️ Start Listening"}
                     </button>
 
-                    {/* Waveform Visualizer */}
                     {isListening && <WaveformVisualizer analyser={analyserRef.current} />}
 
                     <h3 className="text-lg font-semibold mt-4">🎼 Detected Chords:</h3>
-                    <p className="p-2 border rounded-md bg-white">{userChords.join(", ") || "None yet"}</p>
+                    <ChordDisplay detectedChords={userChords} />
 
                     <button
                         onClick={checkChords}
