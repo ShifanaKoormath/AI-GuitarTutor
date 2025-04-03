@@ -167,64 +167,69 @@ const SearchSong = () => {
     };
 
     return (
-        <div className="flex flex-col items-center p-4">
-            <h2 className="text-2xl font-bold mb-4">🎵 Search for a Song</h2>
-
-            <div className="flex gap-2">
-                <input
-                    type="text"
-                    placeholder="Enter song name..."
-                    value={songName}
-                    onChange={(e) => setSongName(e.target.value)}
-                    className="border p-2 rounded-md"
-                />
-                <button
-                    onClick={handleSearch}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-                >
-                    🔍 Search
-                </button>
+        <div className="app-container flex flex-col items-center p-4">
+            {/* Header Section */}
+            <div className="header-container text-center mb-6 p-4 w-full bg-blue-200 rounded-md shadow-md">
+                <h2 className="text-2xl font-bold">🎵 Search and Play Chords</h2>
             </div>
-
-            {error && <p className="text-red-500 mt-2">{error}</p>}
-
+    
+            {/* Search Song Section */}
+            <div className="search-container p-4 border rounded-md shadow-lg bg-gray-100 w-full max-w-lg mb-4">
+                <h3 className="text-lg font-semibold">🔍 Search for a Song</h3>
+                <div className="flex gap-2 mt-2">
+                    <input
+                        type="text"
+                        placeholder="Enter song name..."
+                        value={songName}
+                        onChange={(e) => setSongName(e.target.value)}
+                        className="border p-2 rounded-md w-full"
+                    />
+                    <button
+                        onClick={handleSearch}
+                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                    >
+                        Search
+                    </button>
+                </div>
+                {error && <p className="text-red-500 mt-2">{error}</p>}
+            </div>
+    
+            {/* Display Song Details */}
             {songDetails && (
-                <div className="mt-4 p-4 border rounded-md shadow-lg bg-gray-100">
+                <div className="song-details-container p-4 border rounded-md shadow-lg bg-white w-full max-w-lg mb-4">
                     <h3 className="text-xl font-semibold">{songDetails.song}</h3>
                     <p className="mt-2"><strong>Chords:</strong></p>
                     <ChordDisplay detectedChords={songDetails.chords} />
-                    
                 </div>
             )}
-
-            {songDetails && (
-                <div className="mt-4">
-                    <h3 className="text-lg font-semibold">🎸 Play the Song</h3>
-                    <button
-                        onClick={isListening ? stopListening : startListening}
-                        className={`px-4 py-2 rounded-md ${
-                            isListening ? "bg-red-500 hover:bg-red-600" : "bg-green-500 hover:bg-green-600"
-                        } text-white`}
-                    >
-                        {isListening ? "🛑 Stop Listening" : "🎙️ Start Listening"}
-                    </button>
-
-                    {isListening && <WaveformVisualizer analyser={analyserRef.current} />}
-
-                    <h3 className="text-lg font-semibold mt-4">🎼 Detected Chords:</h3>
-                    <ChordDisplay detectedChords={userChords} />
-
-                    <button
-                        onClick={checkChords}
-                        className="bg-green-500 text-white px-4 py-2 mt-2 rounded-md hover:bg-green-600"
-                    >
-                        ✅ Check Accuracy
-                    </button>
-                    {feedback && <p className="mt-2 font-semibold">{feedback}</p>}
-                </div>
-            )}
+    
+    
+            {/* Record and Upload Section */}
+            <div className="record-container p-4 border rounded-md shadow-lg bg-gray-100 w-full max-w-lg mb-4">
+                <h3 className="text-lg font-semibold">🎙️ Record and Upload</h3>
+                <button
+                    onClick={isListening ? stopListening : startListening}
+                    className={`px-4 py-2 rounded-md mt-2 ${
+                        isListening ? "bg-red-500 hover:bg-red-600" : "bg-green-500 hover:bg-green-600"
+                    } text-white`}
+                >
+                    {isListening ? "🛑 Stop Listening" : "🎤 Start Recording"}
+                </button>
+    
+                {isListening && <WaveformVisualizer analyser={analyserRef.current} />}
+                
+                <h3 className="text-lg font-semibold mt-4">🎼 Detected Chords:</h3>
+                <ChordDisplay detectedChords={userChords} />
+    
+                <button
+                    onClick={checkChords}
+                    className="bg-green-500 text-white px-4 py-2 mt-2 rounded-md hover:bg-green-600"
+                >
+                    ✅ Check Accuracy
+                </button>
+                {feedback && <p className="mt-2 font-semibold">{feedback}</p>}
+            </div>
         </div>
-    );
-};
-
+    );  
+}; 
 export default SearchSong;

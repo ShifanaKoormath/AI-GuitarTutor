@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import "./App.css";
 import SearchSong from "./SearchSong";
+import BeginnerGuide from "./pages/BeginnerGuide"; // ✅ Import Beginner Guide Page
 
 function App() {
   const [file, setFile] = useState(null);
@@ -135,19 +137,32 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1 className="App-header">🎸 AI Guitar Tutor</h1>
+    <Router>
+      <div className="App">
+        <h1 className="App-header">🎸 AI Guitar Tutor</h1>
 
-      {/* 🎵 Song Search Feature */}
+        {/* 🔗 Navbar */}
+         <nav className="navbar">
+      <Link to="/" className="nav-link">🏠 Home</Link>
+      <Link to="/beginner-guide" className="nav-link">📖 Beginner's Guide</Link>
+    </nav>
+
+        <Routes>
+          {/* 🎵 Home Page with Features */}
+          <Route path="/" element={
+  <div className="home-container">
+    
+    {/* 🎵 Song Search Section */}
+    <div className="section-container">
       <SearchSong />
+    </div>
 
-      {/* 🎤 File Upload */}
-      <div className="section">
-        <h2>📤 Upload Audio File</h2>
-        <input type="file" accept="audio/*" onChange={handleFileChange} />
-        <button onClick={handleUpload}>Upload</button>
-        {error && <p className="error-message">❌ {error}</p>}
-      </div>
+    {/* 📤 Audio Upload Section */}
+    <div className="section-container">
+      <h2>📤 Upload Audio File</h2>
+      <input type="file" accept="audio/*" onChange={handleFileChange} />
+      <button onClick={handleUpload}>Upload</button>
+      {error && <p className="error-message">❌ {error}</p>}
 
       {uploadData && (
         <div className="uploaded-info">
@@ -158,22 +173,32 @@ function App() {
           <p><strong>Chords:</strong> {uploadData.chords ? uploadData.chords.join(", ") : "N/A"}</p>
         </div>
       )}
-
-      {/* 🎙️ Recording Section */}
-      <div className="section">
-        <h2>🎙️ Record and Upload</h2>
-        <button onClick={startRecording} disabled={recording}>🎤 Start Recording</button>
-        <button onClick={stopRecording} disabled={!recording}>⏹️ Stop Recording</button>
-
-        {audioURL && (
-          <div>
-            <h3>🎧 Recorded Audio:</h3>
-            <audio controls src={audioURL}></audio>
-            <button onClick={uploadRecordedAudio}>📤 Upload Recording</button>
-          </div>
-        )}
-      </div>
     </div>
+
+    {/* 🎙️ Recording Section */}
+    <div className="section-container">
+      <h2>🎙️ Record and Upload</h2>
+      <button onClick={startRecording} disabled={recording}>🎤 Start Recording</button>
+      <button onClick={stopRecording} disabled={!recording}>⏹️ Stop Recording</button>
+
+      {audioURL && (
+        <div>
+          <h3>🎧 Recorded Audio:</h3>
+          <audio controls src={audioURL}></audio>
+          <button onClick={uploadRecordedAudio}>📤 Upload Recording</button>
+        </div>
+      )}
+    </div>
+
+  </div>
+} />
+
+
+          {/* ✅ Beginner Guide Route */}
+          <Route path="/beginner-guide" element={<BeginnerGuide />} /> 
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

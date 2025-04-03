@@ -1,82 +1,155 @@
+/* General Styling */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.section-container {
+  width: 90%;
+  max-width: 800px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px auto; /* Adds consistent spacing */
+  transition: transform 0.2s ease-in-out;
+}
+
+.section-container:hover {
+  transform: scale(1.02);
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+}
+
 body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow-y: auto; /* Enables scrolling */
+  overflow-y: auto;
   padding: 20px;
+  background: linear-gradient(135deg, #f9f9f9, #dbeafe);
+  font-family: 'Poppins', sans-serif;
 }
-
 
 /* Main Container */
 .App {
   text-align: center;
   background: #ffffff;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
-  width: 450px;
+  padding: 35px;
+  border-radius: 18px;
+  box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.2);
+  width: 480px;
   max-width: 90%;
   animation: fadeIn 0.8s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.App:hover {
+  transform: translateY(-3px);
+}
+/* 🔹 Navbar Styles */
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background: #ffffff;
+  padding: 14px 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* 🔹 Nav Links */
+.nav-link {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  padding: 10px 16px;
+  border-radius: 6px;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* 🔹 Hover & Active States */
+.nav-link:hover {
+  background: #f4f4f4;
+  color: #007bff;
+}
+
+.nav-link:active {
+  background: #e0e0e0;
 }
 
 /* Header */
 .App-header {
   font-size: 28px;
   font-weight: 700;
-  color: #2c3e50;
-  margin-bottom: 15px;
+  color: #1a202c;
+  margin-bottom: 20px;
 }
 
 /* Upload Section */
 .upload-section {
-  background: #f8f9fc;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+  background: #f0f4ff;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 /* Upload Button */
 .upload-label {
   display: inline-block;
-  padding: 14px 20px;
+  padding: 14px 22px;
   font-size: 16px;
   font-weight: bold;
   color: #fff;
-  background: #ff6b6b;
-  border-radius: 8px;
+  background: #ff5252;
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
 .upload-label:hover {
-  background: #e74c3c;
+  background: #e63946;
+  transform: scale(1.05);
 }
 
 /* File Input */
 input[type="file"] {
   display: block;
-  margin: 12px auto;
-  padding: 10px;
+  margin: 15px auto;
+  padding: 12px;
   background: #fff;
   border: 2px dashed #ff6b6b;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   width: 100%;
   text-align: center;
-  font-size: 14px;
+  font-size: 15px;
+  transition: all 0.3s ease-in-out;
+}
+
+input[type="file"]:hover {
+  border-color: #e74c3c;
 }
 
 /* Uploaded Audio Info */
 .uploaded-info {
   background: #eef5ff;
   border-left: 6px solid #145c9e;
-  padding: 20px;
+  padding: 22px;
   margin-top: 20px;
-  border-radius: 12px;
+  border-radius: 14px;
   text-align: left;
-  box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.6s ease-in-out;
 }
 
@@ -100,7 +173,7 @@ input[type="file"] {
 .highlight {
   font-weight: bold;
   font-size: 20px;
-  color: #ff6b6b;
+  color: #ff5252;
 }
 
 /* Error Message */
@@ -122,18 +195,18 @@ input[type="file"] {
 /* Search Box */
 .search-box {
   display: flex;
-  gap: 10px;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 12px;
 }
 
 .search-box input {
-  border: 2px solid #ccc;
-  padding: 12px;
-  border-radius: 5px;
+  border: 2px solid #bbb;
+  padding: 14px;
+  border-radius: 8px;
   width: 280px;
   font-size: 16px;
   transition: all 0.3s ease-in-out;
@@ -142,42 +215,50 @@ input[type="file"] {
 .search-box input:focus {
   border-color: #007bff;
   outline: none;
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
 }
 
 .search-box button {
   background-color: #007bff;
   color: white;
-  padding: 12px 18px;
+  padding: 14px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
+  transition: all 0.3s ease-in-out;
 }
 
 .search-box button:hover {
   background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 /* Song Details */
 .song-details {
-  margin-top: 15px;
-  padding: 15px;
-  border-radius: 5px;
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 10px;
   background: #f8f9fa;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Buttons */
 button {
   background-color: #007bff;
   color: white;
-  padding: 10px 15px;
+  padding: 12px 18px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  margin: 10px;
+  margin: 12px;
   font-size: 16px;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 button:disabled {
@@ -198,29 +279,115 @@ button:disabled {
 }
 
 h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
+  font-size: 26px;
+  margin-bottom: 22px;
+  font-weight: bold;
 }
 
+/* Audio Player */
 audio {
-  margin-top: 10px;
+  margin-top: 12px;
   width: 100%;
+  border-radius: 10px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
 }
+
+/* Chord Display */
 .chord-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 22px;
 }
 
 .chord-item {
   text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.chord-item:hover {
+  transform: scale(1.1);
 }
 
 .chord-image {
-  width: 100px;  /* Adjust as needed */
+  width: 110px;  /* Adjust as needed */
   height: auto;
   display: block;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
+.beginner-guide-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
+/* Main Guide Container */
+.beginner-guide-container {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Guide Titles */
+.guide-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1d3557;
+  margin-top: 20px;
+}
+
+/* Tutorial Containers */
+.tutorial-container {
+  background: #f8f9fc;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 10px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.tutorial-container h4 {
+  font-size: 20px;
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+
+/* Tutorial Links */
+.tutorial-link {
+  display: inline-block;
+  padding: 10px 15px;
+  background: #007bff;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.tutorial-link:hover {
+  background: #0056b3;
+}
+
+/* Outro */
+.guide-outro {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  margin-top: 20px;
+}
